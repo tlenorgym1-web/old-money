@@ -408,35 +408,12 @@
           </div>`;
       }
       updateMainImage();
-     function updateRecap() {
-  const qty = parseInt(document.getElementById('totalQuantity').value);
-  let recapHTML = '';
-  let detailsText = '';  // ← Nouvelle variable
-
-  for (let i = 1; i <= qty; i++) {
-    const colorSel = document.querySelector(`.color-select[data-index="${i}"]`);
-    const sizeSel = document.querySelector(`.size-select[data-index="${i}"]`);
-    if (colorSel && sizeSel) {
-      const colorText = colorSel.options[colorSel.selectedIndex].text;
-      const size = sizeSel.value;
-      recapHTML += `<div class="recap-item">
-        <span>تيشرت ${colorText} - حجم ${size}</span>
-        <span>3900 دج</span>
-      </div>`;
-      detailsText += `تيشرت ${i}: ${colorText} - حجم ${size}\n`;  // ← Construction du texte
-    }
-  }
-  document.getElementById('recapList').innerHTML = recapHTML || '<p style="color:#888">اختر التفاصيل</p>';
-  
-  // ← Ajoute cette ligne pour remplir le champ caché
-  document.getElementById('orderDetailsHidden').value = detailsText.trim();
-
-  updatePrice();
-}
-
-    function updateRecap() {
-      const qty = parseInt(document.getElementById('totalQuantity').value);
+     
+        function updateRecap() {
+      const qty = parseInt(document.getElementById('totalQuantity').value) || 1;
       let recapHTML = '';
+      let detailsText = '';
+
       for (let i = 1; i <= qty; i++) {
         const colorSel = document.querySelector(`.color-select[data-index="${i}"]`);
         const sizeSel = document.querySelector(`.size-select[data-index="${i}"]`);
@@ -447,9 +424,13 @@
             <span>تيشرت ${colorText} - حجم ${size}</span>
             <span>3900 دج</span>
           </div>`;
+          detailsText += `تيشرت ${i}: ${colorText} - حجم ${size}\n`;
         }
       }
+
       document.getElementById('recapList').innerHTML = recapHTML || '<p style="color:#888">اختر التفاصيل</p>';
+      document.getElementById('orderDetailsHidden').value = detailsText.trim();
+
       updatePrice();
     }
 
@@ -508,4 +489,5 @@
 </body>
 
 </html>
+
 
