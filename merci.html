@@ -1,0 +1,241 @@
+<DOCUMENT filename="merci.html">
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>شكراً لك - Bouda Copy Express</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Meta Pixel Base -->
+  <script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '726245523840327');
+  fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=726245523840327&ev=PageView&noscript=1"/>
+  </noscript>
+
+  <!-- Purchase SEULEMENT pour vrais soumissions -->
+  <script>
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.get('success') === 'true') {
+    fbq('track', 'Purchase', {
+      value: 3900,
+      currency: 'DZD'
+    });
+  }
+  </script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Cairo', system-ui, -apple-system, sans-serif;
+      background: linear-gradient(135deg, #10b981, #059669);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      direction: rtl;
+    }
+    
+    .container {
+      background: white;
+      border-radius: 24px;
+      padding: 48px 32px;
+      max-width: 600px;
+      width: 100%;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+      text-align: center;
+      animation: slideUp 0.6s ease-out;
+    }
+    
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .check-icon {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, #10b981, #059669);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+      animation: scaleIn 0.5s ease-out 0.2s both;
+    }
+    
+    @keyframes scaleIn {
+      from {
+        transform: scale(0);
+      }
+      to {
+        transform: scale(1);
+      }
+    }
+    
+    .check-icon svg {
+      width: 48px;
+      height: 48px;
+      stroke: white;
+      stroke-width: 3;
+      fill: none;
+      stroke-dasharray: 100;
+      stroke-dashoffset: 100;
+      animation: drawCheck 0.8s ease-out 0.5s forwards;
+    }
+    
+    @keyframes drawCheck {
+      to {
+        stroke-dashoffset: 0;
+      }
+    }
+    
+    h1 {
+      color: #10b981;
+      font-size: 32px;
+      font-weight: 800;
+      margin-bottom: 16px;
+    }
+    
+    p {
+      color: #64748b;
+      font-size: 18px;
+      line-height: 1.6;
+      margin-bottom: 32px;
+    }
+    
+    .details {
+      background: #f1f5f9;
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 32px;
+      text-align: right;
+    }
+    
+    .details h2 {
+      color: #1e293b;
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+    
+    .details ul {
+      list-style: none;
+      color: #475569;
+    }
+    
+    .details li {
+      padding: 8px 0;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    
+    .details li:last-child {
+      border-bottom: none;
+    }
+    
+    .details li strong {
+      color: #1e293b;
+      margin-left: 8px;
+    }
+    
+    .btn {
+      display: inline-block;
+      background: linear-gradient(135deg, #3b82f6, #2563eb);
+      color: white;
+      padding: 16px 48px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 18px;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+    }
+    
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+    }
+    
+    @media (max-width: 640px) {
+      .container {
+        padding: 32px 20px;
+      }
+      
+      h1 {
+        font-size: 24px;
+      }
+      
+      p {
+        font-size: 16px;
+      }
+      
+      .details h2 {
+        font-size: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="check-icon">
+      <svg viewBox="0 0 52 52">
+        <path d="M14 27l8 8 16-16"/>
+      </svg>
+    </div>
+    
+    <h1>تم استلام طلبك بنجاح! ✅</h1>
+    
+    <p>شكراً لك على طلبك. نحن سعداء بخدمتك!</p>
+    
+    <div class="details">
+      <h2>ما التالي؟</h2>
+      <ul>
+        <li>
+          <strong>خطوة 1:</strong>
+          سنتصل بك خلال 24 ساعة لتأكيد الطلب
+        </li>
+        <li>
+          <strong>خطوة 2:</strong>
+          سيتم شحن التيشرت عبر Noest Express
+        </li>
+        <li>
+          <strong>خطوة 3:</strong>
+          ستستلم تيشرتك خلال 48 ساعة
+        </li>
+        <li>
+          <strong>الدفع:</strong>
+          عند الاستلام (نقداً للمندوب)
+        </li>
+      </ul>
+    </div>
+    
+    <a href="/" class="btn">العودة إلى الرئيسية</a>
+  </div>
+</body>
+</html>
+</DOCUMENT>
+```

@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>تيشرت Old Money - Premium Collection</title>
+  <meta name="description" content="تيشرت Old Money فاخر - أسود، أزرق، بني - أحجام S إلى XXL - 3900 دج">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0f0f0f;
+      --card: #1a1a1a;
+      --text: #f5f5f5;
+      --accent: #d4af37;
+      --secondary: #b0892e;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Cairo', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+    .container { max-width: 560px; margin: 0 auto; padding: 20px; }
+    .header {
+      text-align: center;
+      padding: 40px 20px;
+      background: linear-gradient(to bottom, #1a1a1a, transparent);
+    }
+    .header h1 {
+      font-size: 2.4rem;
+      font-weight: 800;
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+    .header p { font-size: 1.1rem; opacity: 0.9; }
+    .product-card {
+      background: var(--card);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+      margin: 30px 0;
+    }
+    .product-img {
+      width: 100%;
+      height: 420px;
+      object-fit: cover;
+      border-bottom: 3px solid var(--accent);
+    }
+    .price {
+      text-align: center;
+      padding: 20px;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+    .form-section {
+      background: var(--card);
+      border-radius: 16px;
+      padding: 24px;
+      margin: 20px 0;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+    }
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: var(--accent);
+    }
+    select, input {
+      width: 100%;
+      padding: 14px;
+      background: #2a2a2a;
+      border: 1px solid #444;
+      border-radius: 12px;
+      color: white;
+      font-size: 1rem;
+      margin-bottom: 16px;
+    }
+    select:focus, input:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+    .tshirt-item {
+      border: 1px solid #333;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 16px;
+      background: #222;
+    }
+    .tshirt-item h4 {
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+    .recap {
+      background: #222;
+      border-radius: 12px;
+      padding: 20px;
+      margin: 20px 0;
+    }
+    .recap h3 {
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+    .recap-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px solid #333;
+    }
+    .recap-item:last-child { border-bottom: none; }
+    .delivery-cost {
+      color: #ccc;
+      font-size: 0.9rem;
+      margin-top: 10px;
+    }
+    .total-price {
+      background: var(--accent);
+      color: black;
+      padding: 20px;
+      border-radius: 12px;
+      text-align: center;
+      font-size: 1.6rem;
+      font-weight: 800;
+      margin: 30px 0;
+    }
+    button {
+      width: 100%;
+      background: var(--accent);
+      color: black;
+      padding: 18px;
+      border: none;
+      border-radius: 12px;
+      font-size: 1.3rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button:hover {
+      background: #e0c050;
+      transform: translateY(-3px);
+    }
+    #bureauGroup { display: none; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>Old Money Collection</h1>
+      <p>تيشرت فاخر بتصميم كلاسيكي راقي</p>
+    </div>
+
+    <div class="product-card">
+      <img id="mainImg" class="product-img" src="tshirt_black.jpg" alt="تيشرت Old Money">
+      <div class="price">3900 دج للوحدة</div>
+    </div>
+
+    <form id="orderForm" name="commande-tshirt" netlify data-netlify="true" method="POST">
+      <input type="hidden" name="_gotcha" style="display:none">
+
+      <div class="form-section">
+        <label>الكمية الكلية</label>
+        <select id="totalQuantity" onchange="updateTshirtFields()">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+        </select>
+      </div>
+
+      <div id="tshirtFields" class="form-section">
+        <!-- Champs générés dynamiquement -->
+      </div>
+
+      <div class="form-section">
+        <label>الاسم الكامل *</label>
+        <input name="الاسم" type="text" required>
+        <label>رقم الهاتف *</label>
+        <input name="رقم الهاتف" type="tel" required placeholder="05xxxxxxxx">
+        
+        <label>الولاية *</label>
+        <select id="wilaya" name="الولاية" onchange="updateBureaux(); updatePrice()" required>
+          <option value="">اختر الولاية</option>
+          <option value="Adrar">أدرار</option>
+          <option value="Chlef">الشلف</option>
+          <option value="Laghouat">الأغواط</option>
+          <option value="Oum El Bouaghi">أم البواقي</option>
+          <option value="Batna">باتنة</option>
+          <option value="Bejaia">بجاية</option>
+          <option value="Biskra">بسكرة</option>
+          <option value="Bechar">بشار</option>
+          <option value="Blida">البليدة</option>
+          <option value="Bouira">البويرة</option>
+          <option value="Tamanrasset">تمنراست</option>
+          <option value="Tebessa">تبسة</option>
+          <option value="Tlemcen">تلمسان</option>
+          <option value="Tiaret">تيارت</option>
+          <option value="Tizi Ouzou">تيزي وزو</option>
+          <option value="Alger">الجزائر</option>
+          <option value="Djelfa">الجلفة</option>
+          <option value="Jijel">جيجل</option>
+          <option value="Setif">سطيف</option>
+          <option value="Saida">سعيدة</option>
+          <option value="Skikda">سكيكدة</option>
+          <option value="Sidi Bel Abbes">سيدي بلعباس</option>
+          <option value="Annaba">عنابة</option>
+          <option value="Guelma">قالمة</option>
+          <option value="Constantine">قسنطينة</option>
+          <option value="Medea">المدية</option>
+          <option value="Mostaganem">مستغانم</option>
+          <option value="MSila">المسيلة</option>
+          <option value="Mascara">معسكر</option>
+          <option value="Ouargla">ورقلة</option>
+          <option value="Oran">وهران</option>
+          <option value="El Bayadh">البيض</option>
+          <option value="Illizi">إيليزي</option>
+          <option value="Bordj Bou Arreridj">برج بوعريريج</option>
+          <option value="Boumerdes">بومرداس</option>
+          <option value="El Tarf">الطارف</option>
+          <option value="Tindouf">تندوف</option>
+          <option value="Tissemsilt">تيسمسيلت</option>
+          <option value="El Oued">الوادي</option>
+          <option value="Khenchela">خنشلة</option>
+          <option value="Souk Ahras">سوق أهراس</option>
+          <option value="Tipaza">تيبازة</option>
+          <option value="Mila">ميلة</option>
+          <option value="Ain Defla">عين الدفلى</option>
+          <option value="Naama">النعامة</option>
+          <option value="Ain Temouchent">عين تموشنت</option>
+          <option value="Ghardaia">غرداية</option>
+          <option value="Relizane">غليزان</option>
+          <option value="Timimoun">تيميمون</option>
+          <option value="In Salah">عين صالح</option>
+          <option value="Touggourt">توقرت</option>
+          <option value="El Meniaa">المنيعة</option>
+        </select>
+
+        <label>البلدية *</label>
+        <input name="البلدية" type="text" required>
+
+        <label>نوع التوصيل *</label>
+        <select id="deliveryType" name="نوع التوصيل" onchange="updateBureaux(); updatePrice()" required>
+          <option value="">اختر نوع التوصيل</option>
+          <option value="home">إلى المنزل</option>
+          <option value="office">إلى مكتب Noest Express</option>
+        </select>
+
+        <div id="bureauGroup">
+          <label>مكتب Noest Express *</label>
+          <select id="bureau" name="مكتب Noest Express"></select>
+        </div>
+      </div>
+
+      <div class="recap">
+        <h3>تفاصيل الطلب</h3>
+        <div id="recapList"></div>
+        <div id="deliveryInfo" class="delivery-cost"></div>
+      </div>
+
+      <div class="total-price">
+        المجموع: <span id="totalPrice">3900</span> دج
+      </div>
+
+      <button type="submit">اطلب الآن</button>
+    </form>
+  </div>
+
+  <script>
+    const TSHIRT_PRICE = 3900;
+
+    // Frais de livraison (domicile / bureau) - extraits de ta liste précédente + ajustements logique
+    const DELIVERY_PRICES = {
+      "Adrar": { home: 1400, office: 1000 },
+      "Chlef": { home: 850, office: 500 },
+      "Laghouat": { home: 950, office: 600 },
+      "Oum El Bouaghi": { home: 850, office: 500 },
+      "Batna": { home: 900, office: 500 },
+      "Bejaia": { home: 800, office: 500 },
+      "Biskra": { home: 950, office: 600 },
+      "Bechar": { home: 1100, office: 700 },
+      "Blida": { home: 600, office: 500 },
+      "Bouira": { home: 700, office: 500 },
+      "Tamanrasset": { home: 1600, office: 1100 },
+      "Tebessa": { home: 900, office: 600 },
+      "Tlemcen": { home: 900, office: 600 },
+      "Tiaret": { home: 850, office: 500 },
+      "Tizi Ouzou": { home: 750, office: 500 },
+      "Alger": { home: 500, office: 400 },
+      "Djelfa": { home: 950, office: 600 },
+      "Jijel": { home: 900, office: 500 },
+      "Setif": { home: 800, office: 500 },
+      "Saida": { home: 900, office: 600 },
+      "Skikda": { home: 900, office: 500 },
+      "Sidi Bel Abbes": { home: 900, office: 500 },
+      "Annaba": { home: 850, office: 500 },
+      "Guelma": { home: 900, office: 500 },
+      "Constantine": { home: 800, office: 500 },
+      "Medea": { home: 800, office: 500 },
+      "Mostaganem": { home: 900, office: 500 },
+      "MSila": { home: 850, office: 600 },
+      "Mascara": { home: 900, office: 500 },
+      "Ouargla": { home: 950, office: 700 },
+      "Oran": { home: 800, office: 500 },
+      "El Bayadh": { home: 1100, office: 700 },
+      "Illizi": { home: 1200, office: 800 },
+      "Bordj Bou Arreridj": { home: 800, office: 500 },
+      "Boumerdes": { home: 700, office: 500 },
+      "El Tarf": { home: 850, office: 500 },
+      "Tindouf": { home: 1300, office: 900 },
+      "Tissemsilt": { home: 900, office: 500 },
+      "El Oued": { home: 950, office: 700 },
+      "Khenchela": { home: 900, office: 500 },
+      "Souk Ahras": { home: 900, office: 500 },
+      "Tipaza": { home: 700, office: 500 },
+      "Mila": { home: 900, office: 500 },
+      "Ain Defla": { home: 900, office: 500 },
+      "Naama": { home: 1100, office: 700 },
+      "Ain Temouchent": { home: 900, office: 500 },
+      "Ghardaia": { home: 950, office: 600 },
+      "Relizane": { home: 900, office: 500 },
+      "Timimoun": { home: 1400, office: 1000 },
+      "In Salah": { home: 1500, office: 1100 },
+      "Touggourt": { home: 950, office: 700 },
+      "El Meniaa": { home: 1000, office: 800 }
+    };
+
+    const BUREAUX = {
+      "Adrar": ["Adrar - Cité les palmier en face l'hopital"],
+      "Chlef": ["Chlef - Rue Lac des Forêts (A côté du CNRC)"],
+      "Laghouat": ["Laghouat - Cité Al Oulaim(En face la mosquee Hammani)"],
+      "Oum El Bouaghi": ["Oum El Bouaghi - Ain Milla Cité 12 logements en face CEM belaabed"],
+      "Batna": ["Batna - Cité meddour kchida en face les batiments 500", "Barika - Quartier CHAABANI , en face notaire Bachir Farhani, a coté Algerie Telec"],
+      "Bejaia": ["Béjaia - Bâtiment H, Promotion Somacob - Entrée 1 (Edimco), derrière controle tec", "Akbou - Rue hibouche - arafou En face de djurdjura cars et alliance assurance"],
+      "Biskra": ["Biskra / Oulad Djellal - Cité 70 logement block 04 devant hotel Morris", "Béchar / Beni Abbès - Cité 622 Logement Al Badr N°02 - Bloc 52"],
+      "Blida": ["Blida - El Ramoule(A côté de la nouvelle gare routière)", "Boufarik - Residence Belkbir en face salle des fêtes Layalina"],
+      "Bouira": ["Bouira - Villa hamzaoui, ammar khodja , en face yalidine"],
+      "Tamanrasset": ["Tamanrasset - Cité El Hofra - Sarsouf"],
+      "Tebessa": ["Tébessa - Boulevard Houari Boumedien( proche de la banque AGB)"],
+      "Tlemcen": ["Tlemcen - Les Dhalias 426 El kiffane", "Maghnia - Ouled ben Saber, à côté restaurant Raïs, en face la Daïra"],
+      "Tiaret": ["Tiaret - Cité Kaid Ahmed 500 Logements - Batiment 20 N°14KA20C2"],
+      "Tizi Ouzou": ["Tizi Ouzou - Cité 450 Logements, Nouvelle Ville enface la salle des fetes Illya"],
+      "Alger": ["Alger - Cité LSP Boudjemaa temime derrière Mosque el ansar"],
+      "Djelfa": ["Djelfa - Cité Boutrifis(En face de la gendarmerie)"],
+      "Jijel": ["Jijel - Rue 26, Avenue Kaoula Mokhtar, cita sans interdit , Hay IDARI"],
+      "Setif": ["Sétif - Cité Mesoudi Edhouadi 1014-814 Logement(En face la gare Didouche Mo", "El eulma - Cité Tassahoumi, 160 Logements - Batiment 11, el eulma Caffé Wahib"],
+      "Saida": ["Saida - Cité Riad en face Maison de l'environnement"],
+      "Skikda": ["Skikda - Rue Mohammed Namou, en face la direction sonegaz fobor la monté de hamm"],
+      "Sidi Bel Abbes": ["Sidi Bel Abbes - Cité Zitouni Lakhdhar (derrière lycée Azza )"],
+      "Annaba": ["Annaba - Rue Djemila, Saint Claud (A coté de la mosque Badr)"],
+      "Guelma": ["Guelma - Cité 19 Juin - Numéro 02, en face marché Elbaraka"],
+      "Constantine": ["Constantine - Cité Tlemcen Zouaghi (En face de la gendarmerie)", "El khroub - ALI MENDJLI a coté de la salle des fêtes EL BARAKA"],
+      "Medea": ["Médéa - Cité Ennasr (Près du pôle universitaire et Sonegaz)"],
+      "Mostaganem": ["Mostaganem - Pépinière en face la glacier juste à côté librairie BENALI-DJA ( Cité AKID AMROUCHE B"],
+      "MSila": ["M'Sila - Rue Ichbilia (En face l'université de M'Sila)", "Boussaada - Cité El Bader (ESTTIH) a coté de l'annexe APC"],
+      "Mascara": ["Mohammadi - Rue Larbi Ben M'hidi, a coté de l'agence de Barigou", "Mascara - Rue d'oran, colonel Amirouche, Lot 112 N°07 local 6 a coté Hadj grifa"],
+      "Ouargla": ["Ouargla - Cité sidi Abdelkader ,derrière la maison de jeune"],
+      "Oran": ["Oran (Maraval) - Cité 1004 Logements SN B/T1 - Rez-De- Chaussée - Coté Droit 1, en face stade la radio", "Bir el Djir - Coopérative immobilière Dar El Amel - N°14 - Local1 RC", "Es Senia - Rue Bouquerie, n° 56, Oran (près de la gare routière de Tebraia) GAMBI"],
+      "El Bayadh": ["El Bayadh - Cité jolie vue a coté direction sonegaz"],
+      "Illizi": ["Illizi - A coté de la wilaya / Près de boulangerie Ben Ziar"],
+      "Bordj Bou Arreridj": ["Bordj Bou Arreridj - Rue Tabet Salah Bordj Bou Arreridj (Devant la maison de finance)"],
+      "Boumerdes": ["Boumerdès - Cité mimouza en face la piscine olympique Boumerdes", "Boumerdès (Ouled Moussa) - KARA MUSTAPHA, en face la mosquée , ouled moussa"],
+      "El Tarf": ["El Tarf - City center ( centre commerciale zaydi 1er etage N°10 )wilaya el Tar"],
+      "Tindouf": ["Tindouf - Magasin N°03 cité Al-Qasabi, Section 14, Groupement immobilier N° 18"],
+      "Tissemsilt": ["Tissemsilt - Résidence kaidi (promotion) ancien arrêt des taxis"],
+      "El Oued": ["El Oued - Cité Al-Rimal, (la route menant au tribunal)"],
+      "Khenchela": ["Khenchela - Trig lourd à coté de la clinique dialyse Messati -Khenchela-"],
+      "Souk Ahras": ["Souk ahras - En face radio souk ahras et Laboratoire des analyses Taghest"],
+      "Tipaza": ["Tipaza - Cité Mohammed Bougara , a coté de ecole prive DAYA Shcool"],
+      "Mila": ["Mila - Chateau d'eau en face protection civile", "(Chelghoum El aid) - Rue 1er Novembre 1954 Chelghoum El aid (hotel Rhumel)"],
+      "Ain Defla": ["Ain Defla - Cité Nadjem(En face de Taxi Alssam)"],
+      "Naama": ["Naama (Méchería) - Centre-Ville (En face de la Daira) Méchria"],
+      "Ain Temouchent": ["Ain Témouchent - N°11 e 6 , Ilot 567, Cité Zitouna (A coté de la wilaya), a coté de pharmacie Fl"],
+      "Ghardaia": ["Ghardaïa - Rue principale Hadj Messaoud en face la banque societe général"],
+      "Relizane": ["Relizane - Cité 31 logmt en face la justice, a coté de la banque societe général"],
+      "Timimoun": ["Timimoun - Cité MAHDJOUB N° de la porte 16 , Timimoun en face le stade et SAA"],
+      "In Salah": ["In salah - Centre-Ville(Entre la poste et le CNRC)"],
+      "Touggourt": ["Touggourt/El M'ghair - Cité Sidi Abdeslam (Près de la banque BEA)"],
+      "El Meniaa": ["El Meniaa - Route de l’unité Africaine (A côté de la boulangerie Boussaldja 20 mètres de la"]
+    };
+
+    function updateTshirtFields() {
+      const qty = parseInt(document.getElementById('totalQuantity').value);
+      const container = document.getElementById('tshirtFields');
+      container.innerHTML = '';
+
+      for (let i = 1; i <= qty; i++) {
+        container.innerHTML += `
+          <div class="tshirt-item">
+            <h4>تيشرت رقم ${i}</h4>
+            <label>اللون</label>
+            <select class="color-select" data-index="${i}" onchange="updateMainImage(); updateRecap()">
+              <option value="black">أسود</option>
+              <option value="blue">أزرق</option>
+              <option value="brown">بني</option>
+            </select>
+            <label>الحجم</label>
+            <select class="size-select" data-index="${i}" onchange="updateRecap()">
+              <option value="S">S</option>
+              <option value="M">M</option>
+              <option value="L">L</option>
+              <option value="XL">XL</option>
+              <option value="XXL">XXL</option>
+            </select>
+          </div>`;
+      }
+      updateMainImage();
+      updateRecap();
+    }
+
+    function updateMainImage() {
+      const firstColor = document.querySelector('.color-select')?.value || 'black';
+      document.getElementById('mainImg').src = `tshirt_${firstColor}.jpg`;
+    }
+
+    function updateBureaux() {
+      const wilaya = document.getElementById('wilaya').value;
+      const deliveryType = document.getElementById('deliveryType').value;
+      const bureauGroup = document.getElementById('bureauGroup');
+      const bureauSelect = document.getElementById('bureau');
+
+      if (deliveryType === 'office' && wilaya && BUREAUX[wilaya]) {
+        bureauGroup.style.display = 'block';
+        bureauSelect.innerHTML = '<option value="">اختر المكتب</option>';
+        BUREAUX[wilaya].forEach(b => {
+          bureauSelect.innerHTML += `<option value="${b}">${b}</option>`;
+        });
+        bureauSelect.required = true;
+      } else {
+        bureauGroup.style.display = 'none';
+        bureauSelect.required = false;
+      }
+      updatePrice();
+    }
+
+    function updateRecap() {
+      const qty = parseInt(document.getElementById('totalQuantity').value);
+      let recapHTML = '';
+      for (let i = 1; i <= qty; i++) {
+        const colorSel = document.querySelector(`.color-select[data-index="${i}"]`);
+        const sizeSel = document.querySelector(`.size-select[data-index="${i}"]`);
+        if (colorSel && sizeSel) {
+          const colorText = colorSel.options[colorSel.selectedIndex].text;
+          const size = sizeSel.value;
+          recapHTML += `<div class="recap-item">
+            <span>تيشرت ${colorText} - حجم ${size}</span>
+            <span>3900 دج</span>
+          </div>`;
+        }
+      }
+      document.getElementById('recapList').innerHTML = recapHTML || '<p style="color:#888">اختر التفاصيل</p>';
+      updatePrice();
+    }
+
+    function updatePrice() {
+      const qty = parseInt(document.getElementById('totalQuantity').value) || 0;
+      const subtotal = qty * TSHIRT_PRICE;
+      const wilaya = document.getElementById('wilaya').value;
+      const deliveryType = document.getElementById('deliveryType').value;
+
+      let deliveryCost = 0;
+      let deliveryText = '';
+      if (wilaya && deliveryType && DELIVERY_PRICES[wilaya]) {
+        deliveryCost = DELIVERY_PRICES[wilaya][deliveryType] || 0;
+        deliveryText = deliveryType === 'home' ? 'توصيل إلى المنزل' : 'توصيل إلى المكتب';
+      }
+
+      document.getElementById('deliveryInfo').innerHTML = deliveryCost > 0 
+        ? `<div class="recap-item"><span>${deliveryText}</span><span>${deliveryCost} دج</span></div>` 
+        : '';
+
+      document.getElementById('totalPrice').innerText = subtotal + deliveryCost;
+    }
+
+    // Initialisation
+    updateTshirtFields();
+
+    // Soumission
+    document.getElementById('orderForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      // Tu peux ajouter une validation plus poussée ici si besoin
+      const button = this.querySelector('button');
+      button.disabled = true;
+      button.textContent = 'جاري الإرسال...';
+
+      const formData = new FormData(this);
+      const encoded = new URLSearchParams(formData).toString();
+
+      fetch('/', {
+        method: 'POST',
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: encoded
+      })
+      .then(() => {
+        window.location.href = '/merci.html?success=true';
+      })
+      .catch(err => {
+        alert('خطأ في الإرسال، حاول مرة أخرى');
+        console.error(err);
+      })
+      .finally(() => {
+        button.disabled = false;
+        button.textContent = 'اطلب الآن';
+      });
+    });
+  </script>
+</body>
+</html>
