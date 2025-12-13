@@ -36,6 +36,7 @@
     }
     .header p { font-size: 1.1rem; opacity: 0.9; }
     .product-card {
+      background-color: black;
       background: var(--card);
       border-radius: 20px;
       overflow: hidden;
@@ -43,11 +44,11 @@
       margin: 30px 0;
     }
     .product-img {
-      width: 100%;
-      height: 420px;
-      object-fit: cover;
-      border-bottom: 3px solid var(--accent);
-    }
+  width: 100%;
+  height: 500px; /* ou la hauteur que tu veux */
+  object-fit: contain; /* ← Changement clé */
+  background-color: black; /* fond noir si l'image a des zones transparentes */
+}
     .price {
       text-align: center;
       padding: 20px;
@@ -158,6 +159,7 @@
 
     <form id="orderForm" name="commande-tshirt" netlify data-netlify="true" method="POST">
       <input type="hidden" name="_gotcha" style="display:none">
+      <input type="hidden" name="تفاصيل الطلب" id="orderDetailsHidden">
 
       <div class="form-section">
         <label>الكمية الكلية</label>
@@ -406,33 +408,31 @@
           </div>`;
       }
       updateMainImage();
-      updateRecap();
-    }
+     function updateRecap() {
+  const qty = parseInt(document.getElementById('totalQuantity').value);
+  let recapHTML = '';
+  let detailsText = '';  // ← Nouvelle variable
 
-    function updateMainImage() {
-      const firstColor = document.querySelector('.color-select')?.value || 'black';
-      document.getElementById('mainImg').src = `tshirt_${firstColor}.jpg`;
+  for (let i = 1; i <= qty; i++) {
+    const colorSel = document.querySelector(`.color-select[data-index="${i}"]`);
+    const sizeSel = document.querySelector(`.size-select[data-index="${i}"]`);
+    if (colorSel && sizeSel) {
+      const colorText = colorSel.options[colorSel.selectedIndex].text;
+      const size = sizeSel.value;
+      recapHTML += `<div class="recap-item">
+        <span>تيشرت ${colorText} - حجم ${size}</span>
+        <span>3900 دج</span>
+      </div>`;
+      detailsText += `تيشرت ${i}: ${colorText} - حجم ${size}\n`;  // ← Construction du texte
     }
+  }
+  document.getElementById('recapList').innerHTML = recapHTML || '<p style="color:#888">اختر التفاصيل</p>';
+  
+  // ← Ajoute cette ligne pour remplir le champ caché
+  document.getElementById('orderDetailsHidden').value = detailsText.trim();
 
-    function updateBureaux() {
-      const wilaya = document.getElementById('wilaya').value;
-      const deliveryType = document.getElementById('deliveryType').value;
-      const bureauGroup = document.getElementById('bureauGroup');
-      const bureauSelect = document.getElementById('bureau');
-
-      if (deliveryType === 'office' && wilaya && BUREAUX[wilaya]) {
-        bureauGroup.style.display = 'block';
-        bureauSelect.innerHTML = '<option value="">اختر المكتب</option>';
-        BUREAUX[wilaya].forEach(b => {
-          bureauSelect.innerHTML += `<option value="${b}">${b}</option>`;
-        });
-        bureauSelect.required = true;
-      } else {
-        bureauGroup.style.display = 'none';
-        bureauSelect.required = false;
-      }
-      updatePrice();
-    }
+  updatePrice();
+}
 
     function updateRecap() {
       const qty = parseInt(document.getElementById('totalQuantity').value);
@@ -483,7 +483,7 @@
       const button = this.querySelector('button');
       button.disabled = true;
       button.textContent = 'جاري الإرسال...';
-
+      updateRecap();  // Pour s'assurer que le champ caché est à jour
       const formData = new FormData(this);
       const encoded = new URLSearchParams(formData).toString();
 
@@ -506,4 +506,5 @@
     });
   </script>
 </body>
+
 </html>
