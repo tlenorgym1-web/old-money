@@ -211,7 +211,7 @@ transform: translateY(-3px);
         <label>الاسم الكامل *</label>
         <input name="الاسم" type="text" required>
         <label>رقم الهاتف *</label>
-        <input name="رقم الهاتف" type="tel" required placeholder="05xxxxxxxx">
+        <input name="رقم الهاتف" type="tel" required placeholder="0551234567" pattern="[0-9]{10}" maxlength="10" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0,10); validatePhone(this);" title="رقم الهاتف يجب أن يكون 10 أرقام فقط">
         <label>الولاية *</label>
         <select id="wilaya" name="الولاية" onchange="updateBureaux(); updatePrice()" required>
           <option value="">اختر الولاية</option>
@@ -430,7 +430,16 @@ transform: translateY(-3px);
     document.getElementById('orderDetailsHidden').value = detailsText.trim();
     updatePrice();
   }
-
+function validatePhone(input) {
+  const phone = input.value.replace(/[^0-9]/g, ''); // Strip non-digits
+  if (phone.length !== 10) {
+    input.setCustomValidity('رقم الهاتف يجب أن يكون بالضبط 10 أرقام');
+    input.style.borderColor = '#ff4444'; // Red border for error
+  } else {
+    input.setCustomValidity(''); // Clear error
+    input.style.borderColor = ''; // Reset border
+  }
+}
   function updatePrice() {
     const qty = parseInt(document.getElementById('totalQuantity').value) || 0;
     const subtotal = qty * TSHIRT_PRICE;
@@ -460,33 +469,44 @@ transform: translateY(-3px);
 
   // Soumission du formulaire
   document.getElementById('orderForm').addEventListener('submit', function(e) {
+  // Validate phone before proceeding
+  const phoneInput = this.querySelector('input[name="رقم الهاتف"]');
+  const phone = phoneInput.value.replace(/[^0-9]/g, '');
+  if (phone.length !== 10 || !/^\d{10}$/.test(phone)) {
     e.preventDefault();
-    updateRecap(); // Mise à jour finale du champ caché
+    alert('رقم الهاتف غير صالح. يجب أن يكون بالضبط 10 أرقام فقط.');
+    phoneInput.focus();
+    return;
+  }
 
-    const button = this.querySelector('button');
-    button.disabled = true;
-    button.textContent = 'جاري الإرسال...';
+  e.preventDefault();
+  updateRecap(); // Mise à jour finale du champ caché
 
-    const formData = new FormData(this);
-    const encoded = new URLSearchParams(formData).toString();
+  const button = this.querySelector('button');
+  button.disabled = true;
+  button.textContent = 'جاري الإرسال...';
 
-    fetch('/', {
-      method: 'POST',
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: encoded
-    })
-    .then(() => {
-      window.location.href = '/merci.html?success=true';
-    })
-    .catch(err => {
-      alert('خطأ في الإرسال، حاول مرة أخرى');
-      console.error(err);
-    })
-    .finally(() => {
-      button.disabled = false;
-      button.textContent = 'اطلب الآن';
-    });
+  const formData = new FormData(this);
+  const encoded = new URLSearchParams(formData).toString();
+
+  fetch('/', {
+    method: 'POST',
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: encoded
+  })
+  .then(() => {
+    window.location.href = '/merci.html?success=true';
+  })
+  .catch(err => {
+    alert('خطأ في الإرسال، حاول مرة أخرى');
+    console.error(err);
+  })
+  .finally(() => {
+    button.disabled = false;
+    button.textContent = 'اطلب الآن';
   });
+});
 </script>
 </body>
 </html>
+
