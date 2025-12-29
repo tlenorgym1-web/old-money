@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>شكراً لك - Old Money Collection</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Meta Pixel Base -->
+ <!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1137116105159272');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1137116105159272&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+
+  <!-- Purchase uniquement pour les vraies soumissions -->
+  <script>
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.get('success') === 'true') {
+    fbq('track', 'Purchase', {
+      value: 3900,  // Tu peux ajuster dynamiquement si besoin, mais pour l'instant fixe
+      currency: 'DZD'
+    });
+  }
+  </script>
+
+  <style>
+    :root {
+      --bg: #0f0f0f;
+      --card: #1a1a1a;
+      --text: #f5f5f5;
+      --accent: #d4af37;
+      --secondary: #b0892e;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Cairo', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      direction: rtl;
+      color: var(--text);
+    }
+    
+    .container {
+      background: var(--card);
+      border-radius: 24px;
+      padding: 48px 32px;
+      max-width: 600px;
+      width: 100%;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+      text-align: center;
+      animation: slideUp 0.6s ease-out;
+      border: 1px solid #333;
+    }
+    
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .check-icon {
+      width: 90px;
+      height: 90px;
+      background: var(--accent);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 32px;
+      animation: scaleIn 0.5s ease-out 0.2s both;
+    }
+    
+    @keyframes scaleIn {
+      from {
+        transform: scale(0);
+      }
+      to {
+        transform: scale(1);
+      }
+    }
+    
+    .check-icon svg {
+      width: 54px;
+      height: 54px;
+      stroke: black;
+      stroke-width: 4;
+      fill: none;
+      stroke-dasharray: 100;
+      stroke-dashoffset: 100;
+      animation: drawCheck 0.8s ease-out 0.5s forwards;
+    }
+    
+    @keyframes drawCheck {
+      to {
+        stroke-dashoffset: 0;
+      }
+    }
+    
+    h1 {
+      color: var(--accent);
+      font-size: 34px;
+      font-weight: 800;
+      margin-bottom: 16px;
+    }
+    
+    p {
+      color: #cccccc;
+      font-size: 18px;
+      line-height: 1.6;
+      margin-bottom: 32px;
+    }
+    
+    .details {
+      background: #222;
+      border-radius: 16px;
+      padding: 28px;
+      margin-bottom: 32px;
+      text-align: right;
+      border: 1px solid #333;
+    }
+    
+    .details h2 {
+      color: var(--accent);
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    
+    .details ul {
+      list-style: none;
+      color: #cccccc;
+    }
+    
+    .details li {
+      padding: 12px 0;
+      border-bottom: 1px solid #333;
+      font-size: 16px;
+    }
+    
+    .details li:last-child {
+      border-bottom: none;
+    }
+    
+    .details li strong {
+      color: var(--accent);
+      margin-left: 8px;
+    }
+    
+    .btn {
+      display: inline-block;
+      background: var(--accent);
+      color: black;
+      padding: 16px 48px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 18px;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+    }
+    
+    .btn:hover {
+      transform: translateY(-3px);
+      background: #e0c050;
+      box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
+    }
+    
+    @media (max-width: 640px) {
+      .container {
+        padding: 32px 20px;
+      }
+      
+      h1 {
+        font-size: 28px;
+      }
+      
+      p {
+        font-size: 16px;
+      }
+      
+      .details h2 {
+        font-size: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="check-icon">
+      <svg viewBox="0 0 52 52">
+        <path d="M14 27l8 8 16-16"/>
+      </svg>
+    </div>
+    
+    <h1>تم استلام طلبك بنجاح! ✅</h1>
+    
+    <p>شكراً لثقتك في Old Money Collection. نحن سعداء بخدمتك!</p>
+    
+    <div class="details">
+      <h2>ما التالي؟</h2>
+      <ul>
+        <li>
+          <strong>خطوة 1:</strong>
+          سنتصل بك خلال 24 ساعة لتأكيد الطلب
+        </li>
+        <li>
+          <strong>خطوة 2:</strong>
+          سيتم شحن التيشرت عبر Noest Express
+        </li>
+        <li>
+          <strong>خطوة 3:</strong>
+          ستستلم طلبك خلال 48 ساعة
+        </li>
+        <li>
+          <strong>الدفع:</strong>
+          عند الاستلام (نقداً للمندوب)
+        </li>
+      </ul>
+    </div>
+    
+    <a href="/" class="btn">العودة إلى الرئيسية</a>
+  </div>
+</body>
+</html>

@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ensemble Hiver Luxe - Premium Collection</title>
+<meta name="description" content="Ensemble Hiver Luxe فاخر - 4 couleurs - أحجام S إلى XXL - 4800 دج">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0f0f0f;
+  --card: #1a1a1a;
+  --text: #f5f5f5;
+  --accent: #d4af37;
+  --selected: #d4af37;
+  --disabled: #555;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Cairo', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  line-height: 1.6;
+}
+.container { max-width: 560px; margin: 0 auto; padding: 20px; }
+.header {
+  text-align: center;
+  padding: 40px 20px;
+  background: linear-gradient(to bottom, #1a1a1a, transparent);
+}
+.header h1 {
+  font-size: 2.4rem;
+  font-weight: 800;
+  color: var(--accent);
+  margin-bottom: 10px;
+}
+.header p { font-size: 1.1rem; opacity: 0.9; }
+.product-card {
+  background: var(--card);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+  margin: 30px 0;
+}
+.carousel {
+  position: relative;
+  width: 100%;
+  height: 500px;
+  overflow: hidden;
+}
+.carousel-inner {
+  display: flex;
+  flex-direction: row;
+  direction: ltr; /* Important pour que le défilement marche bien en RTL */
+  transition: transform 0.5s ease;
+}
+.carousel-item {
+  min-width: 100%;
+  height: 500px;
+}
+.carousel-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background-color: black;
+}
+.carousel-controls {
+  position: absolute;
+  bottom: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 12px;
+  z-index: 10;
+}
+.carousel-btn {
+  background: rgba(0,0,0,0.6);
+  border: none;
+  color: white;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-size: 1.4rem;
+  cursor: pointer;
+}
+.price {
+  text-align: center;
+  padding: 20px;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+.form-section {
+  background: var(--card);
+  border-radius: 16px;
+  padding: 24px;
+  margin: 20px 0;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+}
+label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: 600;
+  color: var(--accent);
+  font-size: 1.1rem;
+}
+.button-group {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 12px;
+  justify-content: center;
+  overflow-x: auto;
+  padding: 10px 0;
+  margin-bottom: 20px;
+}
+.option-btn {
+  background: #2a2a2a;
+  border: 2px solid #444;
+  border-radius: 30px;
+  padding: 12px 20px;
+  color: white;
+  cursor: pointer;
+  font-size: 1rem;
+  min-width: 60px;
+  transition: 0.3s;
+}
+.option-btn.selected {
+  background: var(--selected);
+  color: black;
+  border-color: var(--selected);
+}
+.option-btn.disabled {
+  background: var(--disabled);
+  color: #888;
+  cursor: not-allowed;
+  border-color: var(--disabled);
+}
+.recap {
+  background: #222;
+  border-radius: 12px;
+  padding: 20px;
+  margin: 20px 0;
+}
+.recap h3 {
+  color: var(--accent);
+  margin-bottom: 16px;
+  text-align: center;
+}
+.recap-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid #333;
+}
+.recap-item:last-child { border-bottom: none; }
+.total-price {
+  background: var(--accent);
+  color: black;
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  font-size: 1.8rem;
+  font-weight: 800;
+  margin: 30px 0;
+}
+button[type="submit"] {
+  width: 100%;
+  background: var(--accent);
+  color: black;
+  padding: 18px;
+  border: none;
+  border-radius: 12px;
+  font-size: 1.3rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.3s;
+}
+button[type="submit"]:hover {
+  background: #e0c050;
+  transform: translateY(-3px);
+}
+#bureauGroup { display: none; margin-top: 20px; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>Ensemble Hiver Luxe</h1>
+    <p>Ensemble tracksuit premium - 4 couleurs exclusives</p>
+  </div>
+
+  <div class="product-card">
+    <div class="carousel">
+      <div class="carousel-inner" id="carouselInner">
+        <div class="carousel-item"><img class="carousel-img" src="bleuclaire.jpg" alt="Bleu Clair" data-color="royal_blue"></div>
+        <div class="carousel-item"><img class="carousel-img" src="bleufoncer.jpg" alt="Bleu Foncé" data-color="marine_blue"></div>
+        <div class="carousel-item"><img class="carousel-img" src="Blackk.jpg" alt="Noir" data-color="night_blue"></div>
+        <div class="carousel-item"><img class="carousel-img" src="vertt.jpg" alt="Vert" data-color="emerald_green"></div>
+      </div>
+      <div class="carousel-controls">
+        <button class="carousel-btn" onclick="prevSlide()">◀</button>
+        <button class="carousel-btn" onclick="nextSlide()">▶</button>
+      </div>
+    </div>
+    <div class="price">4800 دج</div>
+  </div>
+
+  <form id="orderForm" name="commande-ensemble" netlify data-netlify="true" method="POST">
+    <input type="hidden" name="_gotcha" style="display:none">
+    <input type="hidden" name="تفاصيل الطلب" id="orderDetailsHidden">
+
+    <div class="form-section">
+      <label>اللون</label>
+      <div class="button-group color-group"></div>
+
+      <label>الحجم</label>
+      <div class="button-group size-group"></div>
+
+      <label>الكمية</label>
+      <div class="button-group quantity-group"></div>
+    </div>
+
+    <div class="form-section">
+      <label>الاسم الكامل *</label>
+      <input name="الاسم" type="text" required>
+
+      <label>رقم الهاتف *</label>
+      <input name="رقم الهاتف" type="tel" required placeholder="0551234567" pattern="[0-9]{10}" maxlength="10"
+             oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0,10);">
+
+      <label>الولاية *</label>
+      <select id="wilaya" name="الولاية" onchange="updateBureaux(); updatePrice()" required>
+        <option value="">اختر الولاية</option>
+        <option value="Adrar">أدرار</option>
+        <option value="Chlef">الشلف</option>
+        <option value="Laghouat">الأغواط</option>
+        <option value="Oum El Bouaghi">أم البواقي</option>
+        <option value="Batna">باتنة</option>
+        <option value="Bejaia">بجاية</option>
+        <option value="Biskra">بسكرة</option>
+        <option value="Bechar">بشار</option>
+        <option value="Blida">البليدة</option>
+        <option value="Bouira">البويرة</option>
+        <option value="Tamanrasset">تمنراست</option>
+        <option value="Tebessa">تبسة</option>
+        <option value="Tlemcen">تلمسان</option>
+        <option value="Tiaret">تيارت</option>
+        <option value="Tizi Ouzou">تيزي وزو</option>
+        <option value="Alger">الجزائر</option>
+        <option value="Djelfa">الجلفة</option>
+        <option value="Jijel">جيجل</option>
+        <option value="Setif">سطيف</option>
+        <option value="Saida">سعيدة</option>
+        <option value="Skikda">سكيكدة</option>
+        <option value="Sidi Bel Abbes">سيدي بلعباس</option>
+        <option value="Annaba">عنابة</option>
+        <option value="Guelma">قالمة</option>
+        <option value="Constantine">قسنطينة</option>
+        <option value="Medea">المدية</option>
+        <option value="Mostaganem">مستغانم</option>
+        <option value="MSila">المسيلة</option>
+        <option value="Mascara">معسكر</option>
+        <option value="Ouargla">ورقلة</option>
+        <option value="Oran">وهران</option>
+        <option value="El Bayadh">البيض</option>
+        <option value="Illizi">إيليزي</option>
+        <option value="Bordj Bou Arreridj">برج بوعريريج</option>
+        <option value="Boumerdes">بومرداس</option>
+        <option value="El Tarf">الطارف</option>
+        <option value="Tindouf">تندوف</option>
+        <option value="Tissemsilt">تيسمسيلت</option>
+        <option value="El Oued">الوادي</option>
+        <option value="Khenchela">خنشلة</option>
+        <option value="Souk Ahras">سوق أهراس</option>
+        <option value="Tipaza">تيبازة</option>
+        <option value="Mila">ميلة</option>
+        <option value="Ain Defla">عين الدفلى</option>
+        <option value="Naama">النعامة</option>
+        <option value="Ain Temouchent">عين تموشنت</option>
+        <option value="Ghardaia">غرداية</option>
+        <option value="Relizane">غليزان</option>
+        <option value="Timimoun">تيميمون</option>
+        <option value="In Salah">عين صالح</option>
+        <option value="Touggourt">تقرت</option>
+        <option value="El Meniaa">المنيعة</option>
+      </select>
+
+      <label>نوع التوصيل *</label>
+      <select id="deliveryType" name="نوع التوصيل" onchange="updateBureaux(); updatePrice()" required>
+        <option value="home">إلى المنزل</option>
+        <option value="office">إلى المكتب (NOEST Express)</option>
+      </select>
+
+      <div id="bureauGroup">
+        <label>مكتب NOEST Express *</label>
+        <select id="bureau" name="المكتب" required></select>
+      </div>
+    </div>
+
+    <div class="recap">
+      <h3>ملخص الطلب</h3>
+      <div id="recapList"><p style="color:#888;text-align:center;">اختر اللون والحجم والكمية</p></div>
+      <div id="deliveryInfo"></div>
+    </div>
+
+    <div class="total-price">
+      المجموع: <span id="totalPrice">4800</span> دج
+    </div>
+
+    <button type="submit">اطلب الآن</button>
+  </form>
+</div>
+
+<script>
+const ENSEMBLE_PRICE = 4800;
+
+const COLORS = {
+  'royal_blue': 'أزرق فاتح',
+  'marine_blue': 'أزرق غامق',
+  'night_blue': 'أسود',
+  'emerald_green': 'أخضر'
+};
+
+const SIZES = ['S', 'M', 'L', 'XL', 'XXL'];
+
+// Stock simulé (1 pièce par combinaison au départ)
+let stock = {};
+
+// Chargement du stock depuis stock.json
+fetch('/stock.json')
+  .then(response => response.json())
+  .then(data => {
+    stock = data;
+    updateStockUI();
+  })
+  .catch(err => {
+    console.error('Erreur chargement stock:', err);
+    // Fallback localStorage si problème
+    stock = JSON.parse(localStorage.getItem('ensembleStock')) || {};
+    Object.keys(COLORS).forEach(color => {
+      if (!stock[color]) stock[color] = {};
+      SIZES.forEach(size => stock[color][size] = stock[color][size] || 1);
+    });
+    updateStockUI();
+  });
+localStorage.setItem('ensembleStock', JSON.stringify(stock));
+
+const DELIVERY_PRICES = { /* Ton objet DELIVERY_PRICES complet (inchangé) */ 
+  "Adrar": { home: 1200, office: 800 },
+  "Chlef": { home: 800, office: 500 },
+  "Laghouat": { home: 950, office: 600 },
+  "Oum El Bouaghi": { home: 900, office: 500 },
+  "Batna": { home: 850, office: 500 },
+  "Bejaia": { home: 800, office: 500 },
+  "Biskra": { home: 900, office: 500 },
+  "Bechar": { home: 1100, office: 700 },
+  "Blida": { home: 600, office: 500 },
+  "Bouira": { home: 700, office: 500 },
+  "Tamanrasset": { home: 1600, office: 1100 },
+  "Tebessa": { home: 900, office: 600 },
+  "Tlemcen": { home: 900, office: 600 },
+  "Tiaret": { home: 850, office: 500 },
+  "Tizi Ouzou": { home: 750, office: 500 },
+  "Alger": { home: 500, office: 400 },
+  "Djelfa": { home: 950, office: 600 },
+  "Jijel": { home: 900, office: 500 },
+  "Setif": { home: 800, office: 500 },
+  "Saida": { home: 900, office: 600 },
+  "Skikda": { home: 900, office: 500 },
+  "Sidi Bel Abbes": { home: 900, office: 500 },
+  "Annaba": { home: 850, office: 500 },
+  "Guelma": { home: 900, office: 500 },
+  "Constantine": { home: 800, office: 500 },
+  "Medea": { home: 800, office: 500 },
+  "Mostaganem": { home: 900, office: 500 },
+  "MSila": { home: 850, office: 600 },
+  "Mascara": { home: 900, office: 500 },
+  "Ouargla": { home: 950, office: 700 },
+  "Oran": { home: 800, office: 500 },
+  "El Bayadh": { home: 1100, office: 700 },
+  "Illizi": { home: 1200, office: 800 },
+  "Bordj Bou Arreridj": { home: 800, office: 500 },
+  "Boumerdes": { home: 700, office: 500 },
+  "El Tarf": { home: 850, office: 500 },
+  "Tindouf": { home: 1300, office: 900 },
+  "Tissemsilt": { home: 900, office: 500 },
+  "El Oued": { home: 950, office: 700 },
+  "Khenchela": { home: 900, office: 500 },
+  "Souk Ahras": { home: 900, office: 500 },
+  "Tipaza": { home: 700, office: 500 },
+  "Mila": { home: 900, office: 500 },
+  "Ain Defla": { home: 900, office: 500 },
+  "Naama": { home: 1100, office: 700 },
+  "Ain Temouchent": { home: 900, office: 500 },
+  "Ghardaia": { home: 950, office: 600 },
+  "Relizane": { home: 900, office: 500 },
+  "Timimoun": { home: 1400, office: 1000 },
+  "In Salah": { home: 1500, office: 1100 },
+  "Touggourt": { home: 950, office: 700 },
+  "El Meniaa": { home: 1000, office: 800 }
+};
+
+const BUREAUX = {
+  "Adrar": ["Cité les palmiers en face l'hôpital"],
+  "Chlef": ["Rue Lac des Forets (A côte du CNRC)"],
+  "Laghouat": ["Cité Al Ouliam/En face la mosquée Hammani"],
+  "Oum El Bouaghi": ["Ain Mlila Cité 12 logements en face CEM belabed"],
+  "Batna": ["Cité meddour kchida en face les batiments 500"],
+  "Bejaia": ["Bâtiment Promotion Somacob - Entrée 1 (Edimco), derriere controle tec"],
+  "Biskra": ["Cité 70 Logement bloc 04 devant hotel Moris"],
+  "Bechar": ["Derriekra radio El SAOURA/En face la protection civile"],
+  "Blida": ["Residence Belkbir en face salle des fetes Layalina"],
+  "Bouira": ["Villa hamzaoui, ammar khodja, en face yalidine"],
+  "Tamanrasset": ["Cité El Hofra - Sarsouf"],
+  "Tebessa": ["Boulevard Houari Boumediene (proche de la banque AGB)"],
+  "Tlemcen": ["Les Dahlias 426 El kiffane"],
+  "Tiaret": ["Cité Ahmed Saber, a côte restaurant Rais, en face la Daira"],
+  "Tizi Ouzou": ["Cité 450 Logements, Nouvelle Ville en face la salle des fetes liya"],
+  "Alger": ["Cité LSP Boudjema temime derriere Mosquée el ansar"],
+  "Djelfa": ["Cité Boutria/En face de la gendarmerie"],
+  "Jijel": ["Rue 26, Avenue Kaoula Mokhtar, cita sans interdt, Hay IDARI"],
+  "Setif": ["Cité Messoudi Ehouad 1014-614 Logement/En face la gare Didouche Mo"],
+  "Saida": ["Cité Tassahoum, 160 Logements - Bâtiment 11, el euma Café Wahit"],
+  "Skikda": ["Rue Mohammed Namou,en face la direction sonalgaz fobor la monte de hammu"],
+  "Sidi Bel Abbes": ["Cité Zitouni Lakhadhar (derriere lycee Azza)"],
+  "Annaba": ["Rue Djemila, Saint Cloud (A côte de la mosquée Badj)"],
+  "Guelma": ["Cité 19 Juin - Numéro 02, en face march Elbaraka"],
+  "Constantine": ["Cité Tlemcen Zouaghi (En face de la gendarmelie)"],
+  "Medea": ["Cité Emnasar (Près du pole universitaire et Soneigaz)"],
+  "Mostaganem": ["pépinière en face la glacier Juste accote libraire BENALOUJA cité AKID AMIROUCHE"],
+  "MSila": ["Rue Ichbilia (En face Université de M'Sila)"],
+  "Mascara": ["Rue Foran, colonel Amirouche, Lot 112 N°07 local 6 a cote Hadj grifa"],
+  "Ouargla": ["Cité sidi Abdelkader, derriere la maison de jeune"],
+  "Oran": ["Cité 1004 Logements SN TV - Rez-De-Chaussée - Cote Droit 1, en face stade la radie"],
+  "El Bayadh": ["A cote jole vue a cote direction soneigaz"],
+  "Illizi": ["A côte de la wilaya / Près de boulangerie Ben Ziar"],
+  "Bordj Bou Arreridj": ["Rue Tabet Salah Bordj Bou Arrerid (Devant la maison de finance)"],
+  "Boumerdes": ["Cité mimouza en face la piscine Olympique Boumerdes"],
+  "El Tarf": ["City center (centre commerciale zaydi 1er etage N°10 wilaya etel tarf"],
+  "Tindouf": ["Magasin N03 cité Al-Qassabi, Section 14, Groupement immobililer N°16"],
+  "Tissemsilt": ["Résidence kalidi (promotion) ancrier arfét des taxis"],
+  "El Oued": ["Cité Al-Rimal, (la route menant au tribunal)"],
+  "Khenchela": ["Trig lourd a cote de la clinique dialysis Messal-Khenchela"],
+  "Souk Ahras": ["En face radio souk ahras et laboratoire des analyses Taghest"],
+  "Tipaza": ["Cité Mohammed Bougara, a cote de ecole prive DAYA School"],
+  "Mila": ["Chateau d'eau en face protection civile"],
+  "Ain Defla": ["Cité Nadjem En face de Taxi Aissam"],
+  "Naama": ["Centre-Ville (En face de la Daira Mechria)"],
+  "Ain Temouchent": ["N°11 e 6, lot 567, Cité Zitouni (A cote de la wilaya), a cote de pharmacie Fi"],
+  "Ghardaia": ["Rue principale Had Messoud en face la annexe apc. Haj Massoud"],
+  "Relizane": ["Cité 31 logmt en face la justice, a cote de la banque societal général"],
+  "Timimoun": ["Cité MAHJOUB N° de la porte 16, Timimoun en face le stade SAA"],
+  "In Salah": ["Centre-Ville(Entre la poste et le CNRC)"],
+  "Touggourt": ["Cité Sidi Abdeslam (Près de la banque BEA)"],
+  "El Meniaa": ["Route de l'unite Africaine (A cote de la boulangerie Boussaidi) 20 metres de la"]
+};
+
+let currentSlide = 0;
+
+function showSlide(index) {
+  const inner = document.getElementById('carouselInner');
+  const items = inner.children.length;
+  currentSlide = (index + items) % items;
+  inner.style.transform = `translateX(-${currentSlide * 100}%)`;
+}
+function nextSlide() { showSlide(currentSlide + 1); }
+function prevSlide() { showSlide(currentSlide - 1); }
+
+function updateCarouselToColor(color) {
+  const items = document.querySelectorAll('.carousel-item');
+  items.forEach((item, i) => {
+    if (item.querySelector('img').dataset.color === color) showSlide(i);
+  });
+}
+
+function initOptions() {
+  const colorGroup = document.querySelector('.color-group');
+  const sizeGroup = document.querySelector('.size-group');
+  const qtyGroup = document.querySelector('.quantity-group');
+
+  Object.keys(COLORS).forEach(key => {
+    const btn = document.createElement('button');
+    btn.classList.add('option-btn');
+    btn.textContent = COLORS[key];
+    btn.dataset.color = key;
+    btn.onclick = () => selectColor(key);
+    colorGroup.appendChild(btn);
+  });
+
+  SIZES.forEach(size => {
+    const btn = document.createElement('button');
+    btn.classList.add('option-btn');
+    btn.textContent = size;
+    btn.dataset.size = size;
+    btn.onclick = () => selectSize(size);
+    sizeGroup.appendChild(btn);
+  });
+
+  for (let i = 1; i <= 5; i++) {
+    const btn = document.createElement('button');
+    btn.classList.add('option-btn');
+    btn.textContent = i;
+    btn.dataset.qty = i;
+    btn.onclick = () => selectQuantity(i);
+    qtyGroup.appendChild(btn);
+  }
+
+  updateStockUI();
+  updateRecap();
+}
+
+function selectColor(color) {
+  document.querySelectorAll('.color-group .option-btn').forEach(b => b.classList.remove('selected'));
+  const btn = document.querySelector(`.color-group .option-btn[data-color="${color}"]`);
+  if (btn && !btn.classList.contains('disabled')) {
+    btn.classList.add('selected');
+    updateCarouselToColor(color);
+    updateStockUI();
+    updateRecap();
+  }
+}
+
+function selectSize(size) {
+  const color = document.querySelector('.color-group .selected')?.dataset.color;
+  if (!color) return alert('اختر اللون أولاً');
+
+  if (stock[color][size] > 0) {
+    document.querySelectorAll('.size-group .option-btn').forEach(b => b.classList.remove('selected'));
+    document.querySelector(`.size-group .option-btn[data-size="${size}"]`).classList.add('selected');
+    updateStockUI();
+    updateRecap();
+  }
+}
+
+function selectQuantity(qty) {
+  const color = document.querySelector('.color-group .selected')?.dataset.color;
+  const size = document.querySelector('.size-group .selected')?.dataset.size;
+  if (!color || !size) return alert('اختر اللون والحجم أولاً');
+
+  const max = stock[color][size];
+  if (qty <= max) {
+    document.querySelectorAll('.quantity-group .option-btn').forEach(b => b.classList.remove('selected'));
+    document.querySelector(`.quantity-group .option-btn[data-qty="${qty}"]`).classList.add('selected');
+    updateRecap();
+  } else {
+    alert('الكمية غير متوفرة');
+  }
+}
+
+function updateStockUI() {
+  const selectedColor = document.querySelector('.color-group .selected')?.dataset.color;
+  const selectedSize = document.querySelector('.size-group .selected')?.dataset.size;
+
+  // Couleurs
+  document.querySelectorAll('.color-group .option-btn').forEach(btn => {
+    const c = btn.dataset.color;
+    const has = SIZES.some(s => stock[c][s] > 0);
+    if (!has) {
+      btn.classList.add('disabled');
+      btn.textContent = COLORS[c] + ' (إنتهى)';
+    } else {
+      btn.classList.remove('disabled');
+      btn.textContent = COLORS[c];
+    }
+  });
+
+  // Tailles
+  if (selectedColor) {
+    document.querySelectorAll('.size-group .option-btn').forEach(btn => {
+      const s = btn.dataset.size;
+      if (stock[selectedColor][s] <= 0) {
+        btn.classList.add('disabled');
+        btn.textContent = s + ' (إنتهى)';
+      } else {
+        btn.classList.remove('disabled');
+        btn.textContent = s;
+      }
+    });
+  }
+
+  // Quantité
+  if (selectedColor && selectedSize) {
+    const max = stock[selectedColor][selectedSize];
+    document.querySelectorAll('.quantity-group .option-btn').forEach(btn => {
+      const q = parseInt(btn.dataset.qty);
+      if (q > max) {
+        btn.classList.add('disabled');
+        btn.textContent = q + ' (غير متوفر)';
+      } else {
+        btn.classList.remove('disabled');
+        btn.textContent = q;
+      }
+    });
+  }
+}
+
+function updateBureaux() {
+  const wilaya = document.getElementById('wilaya').value;
+  const type = document.getElementById('deliveryType').value;
+  const group = document.getElementById('bureauGroup');
+  const select = document.getElementById('bureau');
+
+  if (type === 'office' && wilaya && BUREAUX[wilaya]) {
+    group.style.display = 'block';
+    select.innerHTML = '<option value="">اختر المكتب</option>';
+    BUREAUX[wilaya].forEach(addr => {
+      select.innerHTML += `<option value="${addr}">NOEST Express - ${addr}</option>`;
+    });
+    select.required = true;
+  } else {
+    group.style.display = 'none';
+    select.required = false;
+  }
+  updatePrice();
+}
+
+function updateRecap() {
+  const colorBtn = document.querySelector('.color-group .selected');
+  const sizeBtn = document.querySelector('.size-group .selected');
+  const qtyBtn = document.querySelector('.quantity-group .selected');
+
+  if (colorBtn && sizeBtn && qtyBtn) {
+    const color = colorBtn.textContent;
+    const size = sizeBtn.textContent;
+    const qty = qtyBtn.textContent;
+    const total = ENSEMBLE_PRICE * qty;
+
+    document.getElementById('recapList').innerHTML = `
+      <div class="recap-item">
+        <span>Ensemble ${color} - حجم ${size} × ${qty}</span>
+        <span>${total} دج</span>
+      </div>`;
+    document.getElementById('orderDetailsHidden').value = `Ensemble: ${color} - حجم ${size} - كمية ${qty}`;
+  } else {
+    document.getElementById('recapList').innerHTML = '<p style="color:#888;text-align:center;">اختر اللون والحجم والكمية</p>';
+  }
+  updatePrice();
+}
+
+function updatePrice() {
+  const qty = parseInt(document.querySelector('.quantity-group .selected')?.textContent || 1);
+  const subtotal = qty * ENSEMBLE_PRICE;
+  const wilaya = document.getElementById('wilaya').value;
+  const type = document.getElementById('deliveryType').value;
+
+  let deliveryCost = 0;
+  let deliveryText = '';
+  if (wilaya && type && DELIVERY_PRICES[wilaya]) {
+    deliveryCost = DELIVERY_PRICES[wilaya][type] || 0;
+    deliveryText = type === 'home' ? 'توصيل إلى المنزل' : 'توصيل إلى المكتب';
+  }
+
+  document.getElementById('deliveryInfo').innerHTML = deliveryCost > 0 ?
+    `<div class="recap-item"><span>${deliveryText}</span><span>${deliveryCost} دج</span></div>` : '';
+
+  document.getElementById('totalPrice').textContent = subtotal + deliveryCost;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  initOptions();
+  showSlide(0);
+  updatePrice();
+});
+
+document.getElementById('orderForm').addEventListener('submit', function(e) {
+  const phone = this.querySelector('input[name="رقم الهاتف"]').value.replace(/[^0-9]/g, '');
+  if (phone.length !== 10) {
+    e.preventDefault();
+    alert('رقم الهاتف يجب أن يكون 10 أرقام');
+    return;
+  }
+
+  const color = document.querySelector('.color-group .selected')?.dataset.color;
+  const size = document.querySelector('.size-group .selected')?.dataset.size;
+  const qty = parseInt(document.querySelector('.quantity-group .selected')?.textContent || 0);
+
+  if (!color || !size || qty < 1) {
+    e.preventDefault();
+    alert('يرجى اختيار اللون والحجم والكمية');
+    return;
+  }
+
+  if (stock[color][size] < qty) {
+    e.preventDefault();
+    alert('الكمية المطلوبة غير متوفرة');
+    return;
+  }
+
+  // Mise à jour stock
+  stock[color][size] -= qty;
+  localStorage.setItem('ensembleStock', JSON.stringify(stock));
+
+  // Envoi Netlify
+  const button = this.querySelector('button');
+  button.disabled = true;
+  button.textContent = 'جاري الإرسال...';
+
+  const formData = new FormData(this);
+  const encoded = new URLSearchParams(formData).toString();
+
+  fetch('/', {
+    method: 'POST',
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: encoded
+  })
+  .then(() => window.location.href = '/merci.html')
+  .catch(() => alert('خطأ في الإرسال'))
+  .finally(() => {
+    button.disabled = false;
+    button.textContent = 'اطلب الآن';
+  });
+
+  e.preventDefault();
+});
+</script>
+</body>
+</html>
