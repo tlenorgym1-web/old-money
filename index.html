@@ -223,14 +223,14 @@ button[type="submit"]:hover {
 
     <div class="form-section">
       <label>الاسم الكامل *</label>
-      <input name="الاسم" type="text" required>
+      <input name="الاسم" type="text">
 
       <label>رقم الهاتف *</label>
-      <input name="رقم الهاتف" type="tel" required placeholder="0551234567" pattern="[0-9]{10}" maxlength="10"
+      <input name="رقم الهاتف" type="tel" placeholder="0551234567" pattern="[0-9]{10}" maxlength="10"
              oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0,10);">
 
       <label>الولاية *</label>
-      <select id="wilaya" name="الولاية" onchange="updateBureaux(); updatePrice()" required>
+      <select id="wilaya" name="الولاية" onchange="updateBureaux(); updatePrice()">
         <option value="">اختر الولاية</option>
         <option value="Adrar">أدرار</option>
         <option value="Chlef">الشلف</option>
@@ -287,14 +287,14 @@ button[type="submit"]:hover {
       </select>
 
       <label>نوع التوصيل *</label>
-      <select id="deliveryType" name="نوع التوصيل" onchange="updateBureaux(); updatePrice()" required>
+      <select id="deliveryType" name="نوع التوصيل" onchange="updateBureaux(); updatePrice()">
         <option value="home">إلى المنزل</option>
-        <option value="office">إلى المكتب (NOEST Express)</option>
+        <option value="office">إلى المكتب (Yalidine Express)</option>
       </select>
 
       <div id="bureauGroup">
-        <label>مكتب NOEST Express *</label>
-        <select id="bureau" name="المكتب" required></select>
+        <label>مكتب Yalidine Express *</label>
+        <select id="bureau" name="المكتب"></select>
       </div>
     </div>
 
@@ -324,29 +324,29 @@ const COLORS = {
 
 const SIZES = ['S', 'M', 'L', 'XL', 'XXL'];
 
-// Stock simulé (1 pièce par combinaison au départ)
 let stock = {};
 
 // Chargement du stock depuis stock.json
 fetch('/stock.json')
-  .then(response => response.json())
+  .then(response => {
+    if (!response.ok) throw new Error('Stock not found');
+    return response.json();
+  })
   .then(data => {
     stock = data;
-    updateStockUI();
+    initOptions();
   })
   .catch(err => {
     console.error('Erreur chargement stock:', err);
-    // Fallback localStorage si problème
-    stock = JSON.parse(localStorage.getItem('ensembleStock')) || {};
+    // Fallback à 100 pour chaque
     Object.keys(COLORS).forEach(color => {
-      if (!stock[color]) stock[color] = {};
-      SIZES.forEach(size => stock[color][size] = stock[color][size] || 1);
+      stock[color] = {};
+      SIZES.forEach(size => stock[color][size] = 100);
     });
-    updateStockUI();
+    initOptions();
   });
-localStorage.setItem('ensembleStock', JSON.stringify(stock));
 
-const DELIVERY_PRICES = { /* Ton objet DELIVERY_PRICES complet (inchangé) */ 
+const DELIVERY_PRICES = { 
   "Adrar": { home: 1200, office: 800 },
   "Chlef": { home: 800, office: 500 },
   "Laghouat": { home: 950, office: 600 },
@@ -605,12 +605,10 @@ function updateBureaux() {
     group.style.display = 'block';
     select.innerHTML = '<option value="">اختر المكتب</option>';
     BUREAUX[wilaya].forEach(addr => {
-      select.innerHTML += `<option value="${addr}">NOEST Express - ${addr}</option>`;
+      select.innerHTML += `<option value="${addr}">Yalidine Express - ${addr}</option>`;
     });
-    select.required = true;
   } else {
     group.style.display = 'none';
-    select.required = false;
   }
   updatePrice();
 }
@@ -658,40 +656,53 @@ function updatePrice() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  initOptions();
   showSlide(0);
   updatePrice();
 });
 
 document.getElementById('orderForm').addEventListener('submit', function(e) {
+  const name = this.querySelector('input[name="الاسم"]').value.trim();
   const phone = this.querySelector('input[name="رقم الهاتف"]').value.replace(/[^0-9]/g, '');
+  const wilaya = document.getElementById('wilaya').value;
+  const deliveryType = document.getElementById('deliveryType').value;
+  const color = document.querySelector('.color-group .selected')?.dataset.color;
+  const size = document.querySelector('.size-group .selected')?.dataset.size;
+  const qty = parseInt(document.querySelector('.quantity-group .selected')?.textContent || 0);
+
+  if (!name) {
+    e.preventDefault();
+    alert('يرجى إدخال الاسم الكامل');
+    return;
+  }
   if (phone.length !== 10) {
     e.preventDefault();
     alert('رقم الهاتف يجب أن يكون 10 أرقام');
     return;
   }
-
-  const color = document.querySelector('.color-group .selected')?.dataset.color;
-  const size = document.querySelector('.size-group .selected')?.dataset.size;
-  const qty = parseInt(document.querySelector('.quantity-group .selected')?.textContent || 0);
-
+  if (!wilaya) {
+    e.preventDefault();
+    alert('يرجى اختيار الولاية');
+    return;
+  }
+  if (!deliveryType) {
+    e.preventDefault();
+    alert('يرجى اختيار نوع التوصيل');
+    return;
+  }
   if (!color || !size || qty < 1) {
     e.preventDefault();
     alert('يرجى اختيار اللون والحجم والكمية');
     return;
   }
-
   if (stock[color][size] < qty) {
     e.preventDefault();
     alert('الكمية المطلوبة غير متوفرة');
     return;
   }
 
-  // Mise à jour stock
-  stock[color][size] -= qty;
-  localStorage.setItem('ensembleStock', JSON.stringify(stock));
+  // Mise à jour stock (commenté car géré par CMS maintenant)
+  // stock[color][size] -= qty;
 
-  // Envoi Netlify
   const button = this.querySelector('button');
   button.disabled = true;
   button.textContent = 'جاري الإرسال...';
@@ -713,8 +724,18 @@ document.getElementById('orderForm').addEventListener('submit', function(e) {
 
   e.preventDefault();
 });
-    </script>
-  </body>
+</script>
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+<script>
+  if (window.netlifyIdentity) {
+    window.netlifyIdentity.on("init", user => {
+      if (!user) {
+        window.netlifyIdentity.on("login", () => {
+          document.location.href = "/admin/";
+        });
+      }
+    });
+  }
+</script>
+</body>
 </html>
-
-
